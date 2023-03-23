@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demo
+  annotations:
+    secrets.infisical.com/auto-reload: "true"
+  name: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        envFrom:
+        - secretRef:
+            name: managed-secret
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi

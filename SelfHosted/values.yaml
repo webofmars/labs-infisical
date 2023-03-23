@@ -1,0 +1,80 @@
+frontend:
+  enabled: true
+  name: frontend
+  podAnnotations: {}
+  deploymentAnnotations: {}
+  replicaCount: 1
+  image:
+    repository: infisical/frontend
+    tag: "83e1900"
+    pullPolicy: IfNotPresent
+  kubeSecretRef: ""
+  service:
+    annotations: {}
+    type: ClusterIP
+    nodePort: ""
+
+frontendEnvironmentVariables:
+  SITE_URL: infisical-24.199.69.207.sslip.io
+
+backend:
+  enabled: true
+  name: backend
+  podAnnotations: {}
+  deploymentAnnotations: {}
+  replicaCount: 1
+  image:
+    repository: infisical/backend
+    tag: "83e1900"
+    pullPolicy: IfNotPresent
+  kubeSecretRef: ""
+  service:
+    annotations: {}
+    type: ClusterIP
+    nodePort: ""
+
+backendEnvironmentVariables:
+  ENCRYPTION_KEY: ""
+  JWT_SIGNUP_SECRET: ""
+  JWT_REFRESH_SECRET: ""
+  JWT_AUTH_SECRET: ""
+  JWT_SERVICE_SECRET: ""
+  SMTP_HOST: smtp.sendgrid.net
+  SMTP_PORT: 587
+  SMTP_SECURE: true
+  SMTP_FROM_NAME: Infisical Self Hosted
+  SMTP_FROM_ADDRESS: contact@webofmars.com
+  SMTP_USERNAME: ""
+  SMTP_PASSWORD: ""
+  SITE_URL: infisical-24.199.69.207.sslip.io
+
+## Mongo DB persistence
+mongodb:
+  enabled: true
+
+## By default the backend will be connected to a Mongo instance within the cluster
+## However, it is recommended to add a managed document DB connection string for production-use (DBaaS)
+## Learn about connection string type here https://www.mongodb.com/docs/manual/reference/connection-string/
+## e.g. "mongodb://<user>:<pass>@<host>:<port>/<database-name>"
+# mongodbConnection:
+#   externalMongoDBConnectionString: ""
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: letsencrypt
+  hostName: infisical-24.199.69.207.sslip.io
+  frontend:
+    path: /
+    pathType: Prefix
+  backend:
+    path: /api
+    pathType: Prefix
+  tls:
+    - secretName: letsencrypt-nginx
+      hosts:
+        - infisical-24.199.69.207.sslip.io
+
+mailhog:
+  enabled: false
