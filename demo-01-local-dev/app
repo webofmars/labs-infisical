@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# set -eu -o pipefail
+
+LIBS="$( dirname ${BASH_SOURCE[0]})/libs"
+# shellcheck disable=SC1091
+source "${LIBS}/log.sh"
+
+lib::log.blue  "demo app: starting"
+
+lib::log.cyan   "demo app: ENV=${ENV}"
+lib::log.yellow "demo app: SECRET=${SECRET}"
+lib::log.cyan   "demo app: PUBLIC_KEY=${PUBLIC_KEY}"
+lib::log.yellow "demo app: PRIVATE_KEY=${PRIVATE_KEY}"
+
+lib::log.blue "demo app: finished"
+exit 0
