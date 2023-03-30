@@ -15,7 +15,7 @@ frontend:
     nodePort: ""
 
 frontendEnvironmentVariables:
-  SITE_URL: infisical-24.199.69.207.sslip.io
+  SITE_URL: infisical.labs.wmars.party
 
 backend:
   enabled: true
@@ -46,7 +46,7 @@ backendEnvironmentVariables:
   SMTP_FROM_ADDRESS: contact@webofmars.com
   SMTP_USERNAME: ""
   SMTP_PASSWORD: ""
-  SITE_URL: infisical-24.199.69.207.sslip.io
+  SITE_URL: infisical.labs.wmars.party
 
 ## Mongo DB persistence
 mongodb:
@@ -63,8 +63,8 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: letsencrypt
-  hostName: infisical-24.199.69.207.sslip.io
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hostName: infisical.labs.wmars.party
   frontend:
     path: /
     pathType: Prefix
@@ -72,9 +72,9 @@ ingress:
     path: /api
     pathType: Prefix
   tls:
-    - secretName: letsencrypt-nginx
+    - secretName: infisical-tls
       hosts:
-        - infisical-24.199.69.207.sslip.io
+        - infisical.labs.wmars.party
 
 mailhog:
   enabled: false
