@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demo
+  annotations:
+    secrets.infisical.com/auto-reload: "true"
+  name: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - image: docker.io/meetupdevopsaixmarseille/infisical:0.1.0@sha256:24cce6c73f2ab3312c2ac4d7e9508337953ef14d7d109ab33710ff730895fe34
+        name: demo
+        command:
+        - /bin/bash
+        - -c
+        - |
+          #!/bin/bash
+          while true; do
+            /code/app
+            sleep 2
+          done
+        envFrom:
+        - secretRef:
+            name: managed-secret
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi

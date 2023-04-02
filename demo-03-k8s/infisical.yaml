@@ -1,0 +1,23 @@
+
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  # Name of of this InfisicalSecret resource
+  name: infisical-lab
+spec:
+  # The host that should be used to pull secrets from. The default value is https://app.infisical.com/api.
+  hostAPI: https://infisical.labs.wmars.party/api
+
+  # The Kubernetes secret the stores the Infisical token
+  tokenSecretReference:
+    # Kubernetes secret name
+    secretName: infisical-token
+    # The secret namespace
+    secretNamespace: infisical
+
+  # The Kubernetes secret that Infisical Operator will create and populate with secrets from the above project
+  managedSecretReference:
+    # The name of managed Kubernetes secret that should be created
+    secretName: managed-secret
+    # The namespace the managed secret should be installed in
+    secretNamespace: default
